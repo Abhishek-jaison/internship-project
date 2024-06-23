@@ -51,7 +51,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'Display',
           path: '/display',
-          builder: (context, params) => DisplayWidget(),
+          builder: (context, params) {
+            final data = params.getParam<String>('data', ParamType.String);
+            return DisplayWidget(data: data);
+          },
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

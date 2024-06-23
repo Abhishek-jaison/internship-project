@@ -1,67 +1,27 @@
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'display_model.dart';
-export 'display_model.dart';
 
-class DisplayWidget extends StatefulWidget {
-  const DisplayWidget({super.key});
+class DisplayWidget extends StatelessWidget {
+  final List<dynamic> data;
 
-  @override
-  State<DisplayWidget> createState() => _DisplayWidgetState();
-}
-
-class _DisplayWidgetState extends State<DisplayWidget> {
-  late DisplayModel _model;
-
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    _model = createModel(context, () => DisplayModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
-  }
-
-  @override
-  void dispose() {
-    _model.dispose();
-
-    super.dispose();
-  }
+  DisplayWidget({required this.data});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _model.unfocusNode.canRequestFocus
-          ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-          : FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primary,
-          automaticallyImplyLeading: false,
-          title: Align(
-            alignment: AlignmentDirectional(0.0, 0.0),
-            child: Text(
-              'Display',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Outfit',
-                    color: Colors.white,
-                    fontSize: 22.0,
-                    letterSpacing: 0.0,
-                  ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Display Data'),
+      ),
+      body: ListView.builder(
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          final item = data[index];
+          return ListTile(
+            title: Text('Name: ${item['name']}'),
+            subtitle: Text(
+              'Encrypted Password: ${item['password']}\nVideo Details: ${item['videoDetails']}\nVideo Hash: ${item['videoDetails']['hash']}',
             ),
-          ),
-          actions: [],
-          centerTitle: false,
-          elevation: 2.0,
-        ),
+          );
+        },
       ),
     );
   }
